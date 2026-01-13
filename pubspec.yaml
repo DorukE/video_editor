@@ -1,0 +1,18 @@
+name: video_editor_projesi # Burayı video_editor_projesi yap
+description: "A new Flutter project."
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+flutter:
+  uses-material-design: true
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  video_editor: ^3.0.0  # Artık burası hata vermeyecek
+  video_player: ^2.10.1
+  image_picker: ^1.2.1
+  path_provider: ^2.1.5
