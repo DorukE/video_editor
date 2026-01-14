@@ -234,114 +234,114 @@ class _VideoEditorPageState extends State<VideoEditorPage> {
       body: _isInitialized
           ? SafeArea(
         child: Column(
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  // VIDEO VE GERÇEK FILTRE KATMANI
-                  Center(
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(_selectedFilterColor, _selectedBlendMode),
-                      child: GestureDetector(
-                        onTap: () => setState(() {
-                          _controller.video.value.isPlaying ? _controller.video.pause() : _controller.video.play();
-                        }),
-                        child: CropGridViewer.preview(controller: _controller),
-                      ),
-                    ),
-                  ),
-
-                  // SÜRÜKLENEBİLİR VE ÖLÇEKLENEBİLİR (BÜYÜTÜLEBİLİR) METİN
-                  if (_videoText.isNotEmpty)
-                    Positioned(
-                      left: _textPosition.dx,
-                      top: _textPosition.dy,
-                      child: GestureDetector(
-                        onScaleStart: (details) {
-                          _initialScale = _textScale;
-                        },
-                        onScaleUpdate: (details) {
-                          setState(() {
-                            // İki parmakla büyütme (zoom)
-                            _textScale = (_initialScale * details.scale).clamp(0.5, 8.0);
-                            // Tek parmakla sürükleme
-                            _textPosition += details.focalPointDelta;
-                          });
-                        },
-                        child: Transform.scale(
-                          scale: _textScale,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              _videoText,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                shadows: [Shadow(color: Colors.black, blurRadius: 12, offset: Offset(2, 2))],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-
-            // TİMELİNE
-            Container(
-              height: 100,
-              width: double.infinity,
-              color: const Color(0xFF0F0F0F),
-              child: TrimSlider(
-                controller: _controller,
-                height: 60,
-                horizontalMargin: 20,
-              ),
-            ),
-
-            if (_showSpeed)
-              Container(
-                color: const Color(0xFF1A1A1A),
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                child: Row(
-                  children: [
-                    const Icon(Icons.speed, color: Colors.blueAccent),
-                    Expanded(
-                      child: Slider(
-                        value: _currentSpeed, min: 0.5, max: 2.0,
-                        onChanged: (v) => setState(() {
-                          _currentSpeed = v;
-                          _controller.video.setPlaybackSpeed(v);
-                        }),
-                      ),
-                    ),
-                    Text("${_currentSpeed.toStringAsFixed(1)}x", style: const TextStyle(color: Colors.blueAccent)),
-                  ],
-                ),
-              ),
-
-            // ALT ARAÇLAR
-            Container(
-              height: 85,
-              color: const Color(0xFF1A1A1A),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _tool(Icons.av_timer, "Hız", () => setState(() => _showSpeed = !_showSpeed)),
-                  _tool(Icons.filter_vintage, "Filtre", _showFilterOptions),
-                  _tool(Icons.text_fields, "Metin", _showTextInput),
-                  _tool(Icons.history, "Sıfırla", _resetAll),
-                  _tool(Icons.close, "Kapat", () => Navigator.pop(context)),
-                ],
-              ),
-            ),
-          ],
+            children: [
+        Expanded(
+        child: Stack(
+        fit: StackFit.expand,
+            children: [
+        // VIDEO VE GERÇEK FILTRE KATMANI
+        Center(
+        child: ColorFiltered(
+        colorFilter: ColorFilter.mode(_selectedFilterColor, _selectedBlendMode),
+        child: GestureDetector(
+          onTap: () => setState(() {
+            _controller.video.value.isPlaying ? _controller.video.pause() : _controller.video.play();
+          }),
+          child: CropGridViewer.preview(controller: _controller),
         ),
-      )
-          : const Center(child: CircularProgressIndicator(color: Colors.blueAccent)),
+      ),
+    ),
+
+    // SÜRÜKLENEBİLİR VE ÖLÇEKLENEBİLİR (BÜYÜTÜLEBİLİR) METİN
+    if (_videoText.isNotEmpty)
+    Positioned(
+    left: _textPosition.dx,
+    top: _textPosition.dy,
+    child: GestureDetector(
+    onScaleStart: (details) {
+    _initialScale = _textScale;
+    },
+    onScaleUpdate: (details) {
+    setState(() {
+    // İki parmakla büyütme (zoom)
+    _textScale = (_initialScale * details.scale).clamp(0.5, 8.0);
+    // Tek parmakla sürükleme
+    _textPosition += details.focalPointDelta;
+    });
+    },
+    child: Transform.scale(
+    scale: _textScale,
+    child: Container(
+    padding: const EdgeInsets.all(10),
+    child: Text(
+    _videoText,
+    style: const TextStyle(
+    color: Colors.white,
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    shadows: [Shadow(color: Colors.black, blurRadius: 12, offset: Offset(2, 2))],
+    ),
+    ),
+    ),
+    ),
+    ),
+    ),
+    ],
+    ),
+    ),
+
+    // TİMELİNE
+    Container(
+    height: 100,
+    width: double.infinity,
+    color: const Color(0xFF0F0F0F),
+    child: TrimSlider(
+    controller: _controller,
+    height: 60,
+    horizontalMargin: 20,
+    ),
+    ),
+
+    if (_showSpeed)
+    Container(
+    color: const Color(0xFF1A1A1A),
+    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+    child: Row(
+    children: [
+    const Icon(Icons.speed, color: Colors.blueAccent),
+    Expanded(
+    child: Slider(
+    value: _currentSpeed, min: 0.5, max: 2.0,
+    onChanged: (v) => setState(() {
+    _currentSpeed = v;
+    _controller.video.setPlaybackSpeed(v);
+    }),
+    ),
+    ),
+    Text("${_currentSpeed.toStringAsFixed(1)}x", style: const TextStyle(color: Colors.blueAccent)),
+    ],
+    ),
+    ),
+
+    // ALT ARAÇLAR
+    Container(
+    height: 85,
+    color: const Color(0xFF1A1A1A),
+    child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+    _tool(Icons.av_timer, "Hız", () => setState(() => _showSpeed = !_showSpeed)),
+    _tool(Icons.filter_vintage, "Filtre", _showFilterOptions),
+    _tool(Icons.text_fields, "Metin", _showTextInput),
+    _tool(Icons.history, "Sıfırla", _resetAll),
+    _tool(Icons.close, "Kapat", () => Navigator.pop(context)),
+    ],
+    ),
+    ),
+    ],
+    ),
+    )
+        : const Center(child: CircularProgressIndicator(color: Colors.blueAccent)),
     );
   }
 
